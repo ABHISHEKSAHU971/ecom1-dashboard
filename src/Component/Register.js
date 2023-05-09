@@ -1,17 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // import { useHistory } from "react-router-use-history"
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  useEffect(() => {
-    if (localStorage.getItem("user_info")) {
-      console.log("register eff");
-      // history.push("./add")
-      Navigate("/add");
-    }
-  }, []);
-
   const Navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -24,9 +16,8 @@ const Register = () => {
     // url= https://retoolapi.dev/mGOLvL/data
     // loacl= http://localhost:5000
 
-    let result = await fetch("https://dashboard9api.herokuapp.com/register", {
+    let result = await fetch("http://localhost:5000/register", {
       method: "POST",
-      
       headers: {
         "content-type": "Application/json",
         Accept: "Application/json",
@@ -36,10 +27,10 @@ const Register = () => {
     result = await result.json();
     console.log("result", result);
     localStorage.setItem("user_info", JSON.stringify(result.data));
-    localStorage.setItem("token", JSON.stringify(result.auth));
+    // localStorage.setItem("token", JSON.stringify(result.auth));
     // history.push("/add")
     if (result) {
-      Navigate("/add");
+      Navigate("/");
     }
   };
 
@@ -52,7 +43,7 @@ const Register = () => {
         <br />
         <br />
         <input
-          placeholder="Username"
+          placeholder="name"
           type="text"
           className="form-control"
           value={username}
